@@ -1,0 +1,17 @@
+{
+    "name": "Stores",
+    "rootNamespace": "",
+    "references": [
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:c00136b7ad564554f969ed27b0a1c463"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

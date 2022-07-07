@@ -1,0 +1,24 @@
+{
+    "name": "APIScripts",
+    "rootNamespace": "",
+    "references": [
+        "GUID:7a1c476420862b74c9932793661bb2d7",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:a347dfdcde7062b4d8bc137ede9f66c1",
+        "GUID:ba36d2d41effe1d4e839b47c6e2373db",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:c00136b7ad564554f969ed27b0a1c463",
+        "GUID:20842f2cf38bed04b8951cc7aa9f5794",
+        "GUID:5d96b40315b6f7d4e8924e4d6884d0e8",
+        "GUID:01241768bffcf094795053d440abb071"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,18 @@
+{
+    "name": "RTLSConfig",
+    "rootNamespace": "",
+    "references": [
+        "GUID:7fb8bcbe01213b64a9e8723457f31106",
+        "GUID:ba36d2d41effe1d4e839b47c6e2373db",
+        "GUID:7a1c476420862b74c9932793661bb2d7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

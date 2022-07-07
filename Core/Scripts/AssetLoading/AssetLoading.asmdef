@@ -1,0 +1,22 @@
+{
+    "name": "AssetLoading",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bd65a2a090a2f86a061b55058cef0073",
+        "GUID:7a1c476420862b74c9932793661bb2d7",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:ba36d2d41effe1d4e839b47c6e2373db",
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:a347dfdcde7062b4d8bc137ede9f66c1",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

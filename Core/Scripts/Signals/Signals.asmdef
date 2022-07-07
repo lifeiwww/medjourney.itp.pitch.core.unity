@@ -1,0 +1,29 @@
+{
+    "name": "Signals",
+    "rootNamespace": "",
+    "references": [
+        "GUID:274ace330c83660bf9d794592a06a80a",
+        "GUID:7a1c476420862b74c9932793661bb2d7",
+        "GUID:5d96b40315b6f7d4e8924e4d6884d0e8",
+        "GUID:ba36d2d41effe1d4e839b47c6e2373db"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Bogus.dll",
+        "Serilog.dll",
+        "Microsoft.AspNetCore.Http.Connections.Client.dll",
+        "Microsoft.AspNetCore.Http.Connections.Common.dll",
+        "Microsoft.AspNetCore.Http.Features.dll",
+        "Microsoft.AspNetCore.Connections.Abstractions.dll",
+        "Microsoft.AspNetCore.SignalR.Client.dll",
+        "Microsoft.AspNetCore.SignalR.Client.Core.dll",
+        "Microsoft.AspNetCore.SignalR.Common.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

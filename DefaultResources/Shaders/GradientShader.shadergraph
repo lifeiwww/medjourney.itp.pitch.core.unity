@@ -1,0 +1,94 @@
+{
+    "m_SGVersion": 2,
+    "m_Type": "UnityEditor.ShaderGraph.GraphData",
+    "m_ObjectId": "da43938a97ac404397308b86e38c321c",
+    "m_Properties": [
+        {
+            "m_Id": "46857990db8149b5bb2d25f606f97dfb"
+        },
+        {
+            "m_Id": "de66788ae2e5475bb8988b4aa47f1cdc"
+        }
+    ],
+    "m_Keywords": [],
+    "m_Nodes": [],
+    "m_GroupDatas": [],
+    "m_StickyNoteDatas": [],
+    "m_Edges": [],
+    "m_VertexContext": {
+        "m_Position": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "m_Blocks": []
+    },
+    "m_FragmentContext": {
+        "m_Position": {
+            "x": 0.0,
+            "y": 200.0
+        },
+        "m_Blocks": []
+    },
+    "m_PreviewData": {
+        "serializedMesh": {
+            "m_SerializedMesh": "{\"mesh\":{\"instanceID\":0}}",
+            "m_Guid": ""
+        }
+    },
+    "m_Path": "Shader Graphs",
+    "m_ConcretePrecision": 0,
+    "m_PreviewMode": 2,
+    "m_OutputNode": {
+        "m_Id": ""
+    },
+    "m_ActiveTargets": []
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "46857990db8149b5bb2d25f606f97dfb",
+    "m_Guid": {
+        "m_GuidSerialized": "aaa68c55-882e-4de5-ac08-523f9b7474f9"
+    },
+    "m_Name": "Color A",
+    "m_DefaultReferenceName": "Color_46857990db8149b5bb2d25f606f97dfb",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "m_ColorMode": 1
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "de66788ae2e5475bb8988b4aa47f1cdc",
+    "m_Guid": {
+        "m_GuidSerialized": "2874a3a5-fd34-48aa-8d6b-bacbc8894030"
+    },
+    "m_Name": "Color B",
+    "m_DefaultReferenceName": "Color_de66788ae2e5475bb8988b4aa47f1cdc",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "m_ColorMode": 0
+}
+
