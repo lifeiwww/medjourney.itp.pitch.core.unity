@@ -17,7 +17,6 @@ namespace dreamcube.unity.Core.Scripts.Configuration.GeneralConfig
         public static string DreamcubeStateDataUrl { get; set; }
         public static string GameRoundDataUrl { get; set; }
         public static string ContentServiceScoringUrl { get; set; }
-
         public static string ContentServiceCategoriesUrl { get; set; }
         public static string ContentServiceActivitiesUrl { get; set; }
         public static string ContentServiceScreensUrl { get; set; }

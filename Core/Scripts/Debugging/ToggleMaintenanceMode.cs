@@ -15,10 +15,11 @@ namespace dreamcube.unity.Core.Scripts.Debugging
         [SerializeField] private GameObject floorPattern;
         [SerializeField] private CanvasGroup WallPattern;
 
-        private bool _currentMode = false;
+        private bool _currentMode = true;
 
         private void Awake()
         {
+            ToggleMaintenanceDisplay();
             EventManager.Instance.StartListening(EventStrings.EventOnSignalRMessage, EventHandler);
         }
 
@@ -29,13 +30,11 @@ namespace dreamcube.unity.Core.Scripts.Debugging
             EventManager.Instance.StopListening(EventStrings.EventOnSignalRMessage, EventHandler);
         }
 
-        //private void Update()
-        //{
-        //    if (Input.GetKeyDown(KeyCode.M))
-        //    {
-        //        ToggleMaintenanceDisplay();
-        //    }
-        //}
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.M))
+                ToggleMaintenanceDisplay();
+        }
 
         public void ToggleMaintenanceDisplay()
         {

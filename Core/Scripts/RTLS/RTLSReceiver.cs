@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using dreamcube.unity.Core.Scripts.Configuration.GeneralConfig;
 using dreamcube.unity.Core.Scripts.General;
-using dreamcube.unity.Core.Scripts.Signals.SignalRClient.Client;
+using dreamcube.unity.Core.Scripts.Util;
 using Google.Protobuf.Collections;
 using manutd;
 using RTLSProtocol;
@@ -16,6 +17,7 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
     public class RTLSReceiver : Singleton<RTLSReceiver>
     {
         public static int NumCameras;
+        public static int NumTrackables;
         public static float RTLSfps;
         private SimpleUDPListener _link;
         private Vector3 _position = Vector3.zero;
@@ -38,14 +40,14 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
         [SerializeField] public string remoteIP = "127.0.0.1";
         [SerializeField] public Vector3 scale = new Vector3(1, 1, 1);
 
-        //[Required("signalRClient is necessary for this component.")]
-        [SerializeField]
-        private BaseSignalRClient signalRClient;
-
         [SerializeField] private int system = 2; // enum from rtls-protocol; 2 = motive
         [SerializeField] private bool throwawayUnorderedFrames;
         [SerializeField] private int yRotations = 3;
 
+        [SerializeField] private GameObject _trackablePrefab;
+
+        //private List<Trackable> trackableList = new List<Trackable>();
+        private Dictionary<int, GameObject> _trackbleObjectDictionary = new Dictionary<int, GameObject>();
 
         private void Start()
         {
@@ -59,7 +61,6 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
             if (_useRTLS == false) return;
             _link = new SimpleUDPListener(localIP, remoteIP, port, acceptMulticast);
             _link.DataReceived += Link_DataReceived;
-
             Log.Debug($"Starting RTLS receiver local: {localIP}:{port} remote: {localIP}:{port}");
         }
 
@@ -67,14 +68,16 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
         {
             if (indicator) indicator.transform.localPosition = _position;
 
-            // calculate FPS
             if (_newData)
             {
+                // calculate RTLS FPS
                 _lastNewFrameRecievedTime = Time.time;
                 _deltaTime += (Time.unscaledDeltaTime - _deltaTime) * 0.1f;
                 RTLSfps = 1.0f / _deltaTime;
                 _newData = false;
             }
+
+
 
             // reset if no new data is received
             if (Time.time - _lastNewFrameRecievedTime > 5)
@@ -153,24 +156,14 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
                     // Pass the position of the first trackable
                     // TODO: This choice shouldn't be arbitrary
                     var trackable = frame.Trackables[0];
-                    _position.x = (float)trackable.Position.X;
-                    _position.y = (float)trackable.Position.Y;
-                    _position.z = (float)trackable.Position.Z;
-                    // Apply a rotation around the up vector (Y)
-                    for (var i = 0; i < yRotations; i++)
-                    {
-                        var tmp = _position.x;
-                        _position.x = -_position.z;
-                        _position.z = tmp;
-                    }
+                    _position = CalculateTrackablePosition(trackable);
 
-                    // Offset the position by some amount
-                    _position += offset;
+                    // create copy of trackables
+                    var trackableList = new List<Trackable>(frame.Trackables);
 
-                    // Scale coordinates according to site specs
-                    _position.x *= scale.x;
-                    _position.y *= scale.y;
-                    _position.z *= scale.z;
+                    // we must create game objects only on the main thread 
+                    Dispatcher.RunOnMainThread(() => ProcessTrackables(trackableList));
+
 
                     break;
                 case 1: // reference objects (cameras)
@@ -214,6 +207,82 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
             return true;
         }
 
+
+        private void ProcessTrackables(List<Trackable> frameTrackables)
+        {
+            List<int> trackableIds = new List<int>();
+            for (var i = 0; i < frameTrackables.Count; i++)
+            {
+                trackableIds.Add(frameTrackables[i].Id);
+                var t = frameTrackables[i];
+                var pos = CalculateTrackablePosition(t);
+                var id = t.Id;
+
+                GameObject obj;
+                if (_trackbleObjectDictionary.TryGetValue(id, out obj))
+                {
+                    obj.transform.localPosition = pos;
+                    var trackableObject = obj.GetComponent<TrackableGameObject>();
+                    trackableObject.Position = pos;
+                    trackableObject.Age++;
+                    trackableObject.IdTextMesh.text = $"ID: {id}\nage: {trackableObject.Age }\nacc: {t.Acceleration}\nangular: {t.AngularAcceleration}\nvel: {t.Velocity}\nsize: {t.CalculateSize()}";
+
+                }
+                else
+                {
+                    GameObject trkbl = Instantiate(_trackablePrefab, pos, Quaternion.identity.normalized, gameObject.transform);
+                    trkbl.GetComponentInChildren<MeshRenderer>().material.color = UnityEngine.Random.ColorHSV();
+                    var trackableObject = trkbl.GetComponent<TrackableGameObject>();
+                    trkbl.name = $"Trackable-{id}";
+                    trackableObject.Id = id;
+                    trackableObject.Position = pos;
+                    _trackbleObjectDictionary.Add(id, trkbl);
+                }
+            }
+
+            for (var i = 0; i < _trackbleObjectDictionary.Keys.Count; i++)
+            {
+                // this could be nicer if we wanted to add an effect of disappearance,
+                // an effect could be spawned from the game object OnDestroy by a attaching a script to it
+
+                var keyId = _trackbleObjectDictionary.ElementAt(i).Key;
+                if (!trackableIds.Contains(_trackbleObjectDictionary.Keys.ElementAt(i)))
+                {
+                    // we can add a delay before destroying the object just for fun
+                    // if we call a die function on the element
+                    if (_trackbleObjectDictionary.TryGetValue(keyId, out var obj))
+                    {
+                        Destroy(obj);
+                        _trackbleObjectDictionary.Remove(keyId);
+                    }
+                }
+            }
+        }
+
+        private Vector3 CalculateTrackablePosition(Trackable trackable)
+        {
+            Vector3 pos = new Vector3();
+            pos.x = (float)trackable.Position.X * 10;
+            pos.y = (float)trackable.Position.Y * 10;
+            pos.z = (float)trackable.Position.Z * 10;
+            // Apply a rotation around the up vector (Y)
+            for (var i = 0; i < yRotations; i++)
+            {
+                var tmp = pos.x;
+                pos.x = -pos.z;
+                pos.z = tmp;
+            }
+
+            // Offset the position by some amount
+            pos += offset;
+
+            // Scale coordinates according to site specs
+            pos.x *= scale.x;
+            pos.y *= scale.y;
+            pos.z *= scale.z;
+            return pos;
+        }
+
         private bool CheckCameraStatus(Trackable camTrackable)
         {
             var isAligned = true;
@@ -254,13 +323,6 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
                 GameBayID = gameBayID,
                 Cameras = camDataList
             };
-
-            Log.Information($"Sending camera data for {trackingData} cameras");
-
-            if (signalRClient != null)
-                Task.Run(() => { signalRClient.UpdateCameraStatus(trackingData, _isStartup); });
-            else
-                Log.Error("No pitch signalR client found");
         }
     }
 }

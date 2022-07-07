@@ -50,6 +50,10 @@ namespace dreamcube.unity.Core.Scripts.Configuration.GeneralConfig
         public string ApiContentActivitiesName = Common.API_CONTENT_ACTIVITIES_NAME;
         public string ApiContentScreensName = Common.API_CONTENT_SCREENS_NAME;
 
+        public float Volume = Common.OUTPUT_VOLUME;
+
+
+
         //public string DreamcubeStateDataUrl = Common.STATE_API_BASE_URL + Common.API_GCM_STATE_NAME;
         //public string GameRoundDataUrl = Common.STATE_API_BASE_URL + Common.API_GRD_STATE_NAME;
         //public string ContentServiceCategoriesUrl = Common.CONTENT_SERVICE_BASE_URL + Common.API_CONTENT_CATEGORIES_NAME;

@@ -58,5 +58,10 @@ public static class Common
     public const string API_CONTENT_ACTIVITIES_NAME = "activities";
     public const string API_CONTENT_SCREENS_NAME = "screens";
     public const string CONTENT_SERVICE_BASE_URL = "http://dreamcube.lp-docs.com:5559/api/v1/";
+    
+    public const float OUTPUT_VOLUME = 1.0f;
+
+
+
 
 }
