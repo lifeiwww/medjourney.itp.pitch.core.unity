@@ -84,6 +84,7 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
             {
                 RTLSfps = 0;
                 NumCameras = 0;
+                NumTrackables = 0;
             }
 
         }
@@ -210,6 +211,7 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
 
         private void ProcessTrackables(List<Trackable> frameTrackables)
         {
+            NumTrackables = frameTrackables.Count;
             List<int> trackableIds = new List<int>();
             for (var i = 0; i < frameTrackables.Count; i++)
             {
