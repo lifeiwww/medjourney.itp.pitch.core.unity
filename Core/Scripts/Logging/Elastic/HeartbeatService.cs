@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Serilog;
 
-namespace manutd
+namespace Assets.dreamcube.itp.pitch.core.unity.Core.Scripts.Logging.Elastic
 {
     public class HeartbeatService
     {

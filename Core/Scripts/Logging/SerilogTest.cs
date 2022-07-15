@@ -2,7 +2,7 @@
 using Serilog.Sinks.Unity3D;
 using UnityEngine;
 
-namespace manutd
+namespace Assets.dreamcube.itp.pitch.core.unity.Core.Scripts.Logging
 {
     public class SerilogTest : MonoBehaviour
     {

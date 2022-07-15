@@ -1,6 +1,6 @@
 ﻿using System.IO;
+using Assets.dreamcube.itp.pitch.core.unity.Core.Scripts.Logging;
 using dreamcube.unity.Core.Scripts.Configuration.GeneralConfig;
-using manutd;
 using Serilog;
 using Serilog.Sinks.Unity3D;
 using UnityEngine;

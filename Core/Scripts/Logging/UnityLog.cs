@@ -1,7 +1,7 @@
 ﻿using Serilog;
 using UnityEngine;
 
-namespace manutd
+namespace Assets.dreamcube.itp.pitch.core.unity.Core.Scripts.Logging
 {
     internal class UnityLog
     {

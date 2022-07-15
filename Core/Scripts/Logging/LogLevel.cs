@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace manutd
+namespace Assets.dreamcube.itp.pitch.core.unity.Core.Scripts.Logging
 {
     internal static class LogLevel
     {

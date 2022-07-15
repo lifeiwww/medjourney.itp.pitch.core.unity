@@ -3,7 +3,7 @@ using System.Diagnostics;
 using Serilog;
 using UnityEngine;
 
-namespace manutd
+namespace Assets.dreamcube.itp.pitch.core.unity.Core.Scripts.Logging
 {
     public class VersionLog : MonoBehaviour
     {

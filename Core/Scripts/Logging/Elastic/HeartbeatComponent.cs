@@ -1,7 +1,8 @@
-﻿using dreamcube.unity.Core.Scripts.Configuration.GeneralConfig;
+﻿using Assets.dreamcube.itp.pitch.core.unity.Core.Scripts.Logging.Elastic;
+using dreamcube.unity.Core.Scripts.Configuration.GeneralConfig;
 using UnityEngine;
 
-namespace manutd
+namespace Assets.dreamcube.itp.pitch.core.unity.Core
 {
     public class HeartbeatComponent : MonoBehaviour
     {
@@ -23,7 +24,7 @@ namespace manutd
 
         private void OnApplicationQuit()
         {
-            if (_heartbeatEnabled ) _heartbeatService?.Stop();
+            if (_heartbeatEnabled) _heartbeatService?.Stop();
         }
     }
 }

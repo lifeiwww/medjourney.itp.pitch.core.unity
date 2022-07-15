@@ -6,7 +6,6 @@ using dreamcube.unity.Core.Scripts.Configuration.GeneralConfig;
 using dreamcube.unity.Core.Scripts.General;
 using dreamcube.unity.Core.Scripts.Util;
 using Google.Protobuf.Collections;
-using manutd;
 using RTLSProtocol;
 using Serilog;
 using SimpleJSON;
@@ -150,6 +149,11 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
 
             // What kind of data is this?
             int frameType = contextNode["t"];
+
+            var allData = frame.UnknownFields;
+            Debug.Log( $"Unknown fields {allData}");
+
+
             switch (frameType)
             {
                 case 0: // markers (ball)
@@ -213,6 +217,8 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
         {
             NumTrackables = frameTrackables.Count;
             List<int> trackableIds = new List<int>();
+
+
             for (var i = 0; i < frameTrackables.Count; i++)
             {
                 trackableIds.Add(frameTrackables[i].Id);
@@ -227,6 +233,8 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
                     var trackableObject = obj.GetComponent<TrackableGameObject>();
                     trackableObject.Position = pos;
                     trackableObject.Age++;
+
+                    //TODO: clean this up
                     trackableObject.IdTextMesh.text = $"ID: {id}\nage: {trackableObject.Age }\nacc: {t.Acceleration}\nangular: {t.AngularAcceleration}\nvel: {t.Velocity}\nsize: {t.CalculateSize()}";
 
                 }

@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using dreamcube.unity.Core.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,8 +1,7 @@
-﻿using dreamcube.unity.Core.Scripts.Components.RTLS;
+﻿using Assets.dreamcube.itp.pitch.core.unity.Core.Scripts.Logging;
+using dreamcube.unity.Core.Scripts.Components.RTLS;
 using dreamcube.unity.Core.Scripts.Configuration.GeneralConfig;
 using dreamcube.unity.Core.Scripts.Debugging;
-using dreamcube.unity.Core.Scripts.Signals.SignalRClient.Client;
-using manutd;
 using TMPro;
 using UnityEngine;
 

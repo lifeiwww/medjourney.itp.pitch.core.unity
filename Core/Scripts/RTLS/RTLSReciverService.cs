@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using dreamcube.unity.Core.Scripts.Configuration.GeneralConfig;
 using dreamcube.unity.Core.Scripts.Signals.SignalRClient.Client;
 using Google.Protobuf.Collections;
-using manutd;
 using RTLSProtocol;
 using Serilog;
 using SimpleJSON;

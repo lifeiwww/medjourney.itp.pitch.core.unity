@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using dreamcube.unity.Core.Scripts.General;
 using dreamcube.unity.Core.Scripts.Util;
-using manutd;
 using Serilog;
 using UnityEngine;
 using UniRx;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using dreamcube.unity.Core.Scripts.Configuration.GeneralConfig;
 using dreamcube.unity.Core.Scripts.Signals.SignalRClient.Client;
-using manutd;
 using Serilog;
 using UnityEngine;
 

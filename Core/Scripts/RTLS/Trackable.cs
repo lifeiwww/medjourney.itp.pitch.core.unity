@@ -1777,8 +1777,20 @@ namespace RTLSProtocol {
       }
     }
 
-    /// <summary>Field number for the "trackables" field.</summary>
-    public const int TrackablesFieldNumber = 3;
+    /// <summary>Other data.</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pb.UnknownFieldSet UnknownFields
+        {
+        get { return _unknownFields; }
+        set
+        {
+            _unknownFields = value;
+        }
+    }
+
+
+        /// <summary>Field number for the "trackables" field.</summary>
+        public const int TrackablesFieldNumber = 3;
     private static readonly pb::FieldCodec<global::RTLSProtocol.Trackable> _repeated_trackables_codec
         = pb::FieldCodec.ForMessage(26, global::RTLSProtocol.Trackable.Parser);
     private readonly pbc::RepeatedField<global::RTLSProtocol.Trackable> trackables_ = new pbc::RepeatedField<global::RTLSProtocol.Trackable>();
