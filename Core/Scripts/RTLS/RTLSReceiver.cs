@@ -43,7 +43,9 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
         [SerializeField] private bool throwawayUnorderedFrames;
         [SerializeField] private int yRotations = 3;
 
+#pragma warning disable CS0649
         [SerializeField] private GameObject _trackablePrefab;
+#pragma warning restore CS0649
 
         //private List<Trackable> trackableList = new List<Trackable>();
         private Dictionary<int, GameObject> _trackbleObjectDictionary = new Dictionary<int, GameObject>();
