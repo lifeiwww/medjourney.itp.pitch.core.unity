@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using dreamcube.unity.Core.Scripts.General;
 using dreamcube.unity.Core.Scripts.Signals.Events;
-using Serilog;
 using UniRx;
 using UnityEngine;
 
@@ -35,7 +34,7 @@ namespace dreamcube.unity.Core.Scripts.AssetLoading
                 if (baseSceneNamesList.Contains(sceneName) && !UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName).isLoaded)
                 {
                     BaseSceneNames.Add(sceneName);
-                    Log.Debug($"Adding scene {sceneName} to scenes list");
+                    Debug.Log($"Adding scene {sceneName} to scenes list");
                 }
             }
         }
@@ -55,7 +54,7 @@ namespace dreamcube.unity.Core.Scripts.AssetLoading
             }
 
             callback?.Invoke();
-            Log.Debug($"Base Scenes are loaded");
+            Debug.Log($"Base Scenes are loaded");
 
         }
 

@@ -1,8 +1,6 @@
 using dreamcube.unity.Core.Scripts.Signals.Events;
-using dreamcube.unity.Core.Scripts.Signals.SignalRClient.Client;
 using dreamcube.unity.Core.Scripts.Util;
 using OdinSerializer.Utilities;
-using Serilog;
 using UnityEngine;
 
 namespace dreamcube.unity.Core.Scripts.Debugging
@@ -20,14 +18,11 @@ namespace dreamcube.unity.Core.Scripts.Debugging
         private void Awake()
         {
             ToggleMaintenanceDisplay();
-            EventManager.Instance.StartListening(EventStrings.EventOnSignalRMessage, EventHandler);
         }
 
         private void OnDestroy()
         {
             if (EventManager.Instance.SafeIsUnityNull()) return;
-
-            EventManager.Instance.StopListening(EventStrings.EventOnSignalRMessage, EventHandler);
         }
 
         private void Update()
@@ -38,7 +33,7 @@ namespace dreamcube.unity.Core.Scripts.Debugging
 
         public void ToggleMaintenanceDisplay()
         {
-            Log.Debug($"ToggleMaintenanceMode {WallPattern.gameObject.activeInHierarchy}");
+            Debug.Log($"ToggleMaintenanceMode {WallPattern.gameObject.activeInHierarchy}");
             _currentMode = !_currentMode;
             floorPattern.SetActive(_currentMode);
             WallPattern.gameObject.SetActive(_currentMode);
@@ -46,19 +41,10 @@ namespace dreamcube.unity.Core.Scripts.Debugging
 
         public void ActivateMaintenanceDisplay(bool isActive)
         {
-            Log.Debug($"ToggleMaintenanceMode {WallPattern.gameObject.activeInHierarchy}");
+            Debug.Log($"ToggleMaintenanceMode {WallPattern.gameObject.activeInHierarchy}");
             _currentMode = isActive;
             floorPattern.SetActive(isActive);
             WallPattern.gameObject.SetActive(isActive);
-        }
-
-        private void EventHandler(string theEvent, string msg, GameObject sender, DataModelBase data)
-        {
-            if (theEvent == EventStrings.EventOnSignalRMessage && msg == SignalRIn.NotifyOnTestMode)
-            {
-                BoolData action = Extensions.Cast(data, typeof(BoolData));
-                ActivateMaintenanceDisplay(action.ABool);
-            }
         }
     }
 }

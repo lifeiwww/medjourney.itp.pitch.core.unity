@@ -1,5 +1,4 @@
-﻿using Serilog;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace App.Scripts.Display
 {
@@ -14,8 +13,8 @@ namespace App.Scripts.Display
             int displayOffsetX = 0;
             int displayOffsetY = 0;
 
-            Log.Information("Activating displays");
-            Log.Information($"{UnityEngine.Display.displays.Length} displays found");
+            Debug.Log("Activating displays");
+            Debug.Log($"{UnityEngine.Display.displays.Length} displays found");
 
             for (var i = 0; i < UnityEngine.Display.displays.Length; i++)
             {
@@ -24,7 +23,7 @@ namespace App.Scripts.Display
                 UnityEngine.Display.displays[i].SetParams(displayWidth, displayHeight, displayOffsetX, displayOffsetY);
             }
 
-            Log.Information("Display configuration complete");
+            Debug.Log("Display configuration complete");
         }
     }
 }

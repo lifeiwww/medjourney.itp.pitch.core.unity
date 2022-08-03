@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
-using Serilog;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -246,10 +245,10 @@ namespace dreamcube.unity.Core.Scripts.Util
                     FileData = File.ReadAllBytes(FilePath);
                     Tex2D = new Texture2D(2, 2); // Create new "empty" texture
 
-                    if (Tex2D.LoadImage(FileData)) // Load the imagedata into the texture (size is set automatically)
-                        return Tex2D; // If data = readable -> return texture
+                    if (Tex2D.LoadImage(FileData)) // Load the image data into the texture (size is set automatically)
+                        return Tex2D; // If data is readable -> return texture
                 } catch (Exception ex) {
-                    Log.Debug($"could not load texture {ex}");
+                    Debug.LogError($"could not load texture {ex}");
                 }
 
             return null;                     // Return null if load failed
@@ -265,7 +264,6 @@ namespace dreamcube.unity.Core.Scripts.Util
                 textures.Add(tex);
             }
 
-            Log.Debug(">>>>>>> loading textures count " + textures.Count);
             return textures;
         }
 
@@ -294,21 +292,6 @@ namespace dreamcube.unity.Core.Scripts.Util
             return sprite.texture;
         }
 
-        //public static Texture2D loadTexturesFromUrl(string url)
-        //{
-        //    TextAsset imageAsset = new TextAsset(url);
-        //    Texture2D tex = Extensions.LoadTexture(url);
-        //    return tex;
-        //}
-
-        //IEnumerator GetTextureFromURL()
-        //{
-        //    UnityWebRequest www = UnityWebRequestTexture.GetTexture("http://101.201.181.209/test/aaa.html");
-        //    yield return www.SendWebRequest();
-        //    Texture myTexture = DownloadHandlerTexture.GetContent(www);
-        //}
-
-
         public static void SaveStringToFile( string input, string filename , bool useStreamingAssets = true )
         {
             var filePath = useStreamingAssets ? Path.Combine(Application.streamingAssetsPath, filename) : filename;
@@ -322,7 +305,7 @@ namespace dreamcube.unity.Core.Scripts.Util
             if (File.Exists(filePath)) // Read the json from the file into a string
                 return File.ReadAllText(filePath);
 
-            Log.Error("Cannot load file from " + filePath);
+            Debug.LogError($"Cannot load file from {filePath}");
             return "";
         }
 

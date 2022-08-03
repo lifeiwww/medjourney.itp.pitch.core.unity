@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using Serilog;
+using UnityEngine;
 
 namespace dreamcube.unity.Core.Scripts.Components.RTLS
 {
@@ -29,19 +29,19 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
                 _client.ExclusiveAddressUse = false;
             }
 
-            Log.Information($"Binding UDP to local port {port}");
+            Debug.Log($"Binding UDP to local port {port}");
             _client.Client.Bind(localEp);
 
             // Join multicast group if applicable
             if (isMulticast)
             {
-                Log.Information($"Joining UDP multicast {remoteIP}:{port}");
+                Debug.Log($"Joining UDP multicast {remoteIP}:{port}");
                 var multicastaddress = IPAddress.Parse(remoteIP);
                 _client.JoinMulticastGroup(multicastaddress);
             }
             else
             {
-                Log.Information($"Using UDP unicast: {remoteIP}:{port}");
+                Debug.Log($"Using UDP unicast: {remoteIP}:{port}");
             }
 
             // use initial callback to log some info
@@ -53,7 +53,7 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
         private void ReceiveInitialServerInfo(IAsyncResult result)
         {
             if (_closed) return;
-            Log.Information($"Received UDP data {result} from {_remoteEp.Address}:{_remoteEp.Port.ToString()}");
+            Debug.Log($"Received UDP data {result} from {_remoteEp.Address}:{_remoteEp.Port.ToString()}");
             ReceiveServerInfo(result);
         }
 
@@ -71,7 +71,7 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
             }
             catch (Exception e) when (!(e is ObjectDisposedException))
             {
-                Log.Error("Exception occurred while trying to receive UDP message: " + e.Message);
+                Debug.LogError("Exception occurred while trying to receive UDP message: " + e.Message);
             }
         }
 
@@ -86,11 +86,11 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
                 }
 
                 _closed = true;
-                Log.Debug("UDP connection closed");
+                Debug.Log("UDP connection closed");
             }
             catch (Exception e)
             {
-                Log.Debug(e.ToString());
+                Debug.Log(e.ToString());
             }
         }
     }

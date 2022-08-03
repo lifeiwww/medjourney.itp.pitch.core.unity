@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using dreamcube.unity.Core.Scripts.General;
-using Serilog;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace dreamcube.unity.Core.Scripts.Signals.Events
 {
     [Serializable]
-    public class AppEvent : UnityEvent<string, string, GameObject, DataModelBase> { }
+    public class AppEvent : UnityEvent<string, string, GameObject> { }
 
     public class EventManager : Singleton<EventManager>, IEventManager
     {
@@ -26,12 +25,12 @@ namespace dreamcube.unity.Core.Scripts.Signals.Events
         {
             base.OnApplicationQuit();
             Clean();
-            Log.Information("[APP] Quit");
+            Debug.Log("[APP] Quit");
         }
 
         private void Clean()
         {
-            Log.Debug("Cleaning");
+            Debug.Log("Cleaning");
             foreach (var thisEvent in _appEventDictionary.Values)
             {
                 thisEvent.RemoveAllListeners();
@@ -41,7 +40,7 @@ namespace dreamcube.unity.Core.Scripts.Signals.Events
         }
 
         public void StartListening(string eventType,
-            UnityAction<string, string, GameObject, DataModelBase> listener, DataModelBase data = null,
+            UnityAction<string, string, GameObject> listener,
             MonoBehaviour mb = null)
         {
             AppEvent thisEvent = null;
@@ -59,7 +58,7 @@ namespace dreamcube.unity.Core.Scripts.Signals.Events
         }
 
         public void StopListening(string appEventType,
-            UnityAction<string, string, GameObject, DataModelBase> listener)
+            UnityAction<string, string, GameObject> listener)
         {
             if (!Instance)
                 return;
@@ -72,7 +71,7 @@ namespace dreamcube.unity.Core.Scripts.Signals.Events
         }
 
         public void TriggerEvent(string appEventType, string msg = "", GameObject obj = null,
-            DataModelBase eventData = null, bool trackEvent = false, long value = 0, bool debug = false)
+             bool trackEvent = false, long value = 0, bool debug = false)
         {
             AppEvent thisEvent = null;
             if (Instance._appEventDictionary.TryGetValue(appEventType, out thisEvent))
@@ -82,7 +81,7 @@ namespace dreamcube.unity.Core.Scripts.Signals.Events
                 if (UseFilter && FilterEvents(appEventType, msg, FilterTime))
                     return;
 
-                thisEvent.Invoke(appEventType, msg, obj, eventData);
+                thisEvent.Invoke(appEventType, msg, obj);
                 if (debug)
                 {
                     var message = $"TRIGGERING EVENT: {appEventType}";
@@ -91,7 +90,7 @@ namespace dreamcube.unity.Core.Scripts.Signals.Events
                         message += $"\nCalled by: {obj}";
                     }
 
-                    Log.Debug(message);
+                    Debug.Log(message);
                 }
                 //else
                 //{
@@ -116,7 +115,7 @@ namespace dreamcube.unity.Core.Scripts.Signals.Events
                 var timeSpan = DateTime.Now - processed[key];
                 if (timeSpan.TotalMilliseconds <= timeWindow)
                 {
-                    Log.Debug($"[FILTERED EVENT] {appEventType} {msg}");
+                    Debug.Log($"[FILTERED EVENT] {appEventType} {msg}");
                     return true;
                 }
             }

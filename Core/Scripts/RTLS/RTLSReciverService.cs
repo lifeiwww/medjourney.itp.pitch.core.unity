@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using dreamcube.unity.Core.Scripts.Configuration.GeneralConfig;
-using dreamcube.unity.Core.Scripts.Signals.SignalRClient.Client;
 using Google.Protobuf.Collections;
 using RTLSProtocol;
-using Serilog;
 using SimpleJSON;
 using UnityEngine;
 
@@ -31,10 +29,6 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
         [SerializeField] public string remoteIP = "127.0.0.1";
         [SerializeField] public Vector3 scale = new Vector3(1, 1, 1);
 
-        //[Required("signalRClient is necessary for this component.")]
-        [SerializeField]
-        private BaseSignalRClient signalRClient = null;
-
         [SerializeField] private int system = 2; // enum from rtls-protocol; 2 = motive
         [SerializeField] private bool throwawayUnorderedFrames;
         [SerializeField] private int yRotations = 3;
@@ -57,19 +51,13 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
             _link = new SimpleUDPListener(localIP, remoteIP, port, acceptMulticast);
             _link.DataReceived += Link_DataReceived;
 
-
-            if (signalRClient == null)
-            {
-                signalRClient = GameObject.FindObjectOfType<BaseSignalRClient>();
-            }
-
-            Log.Debug($"Starting RTLS receiver local: {localIP}:{port} remote: {localIP}:{port}");
+            Debug.Log($"Starting RTLS receiver local: {localIP}:{port} remote: {localIP}:{port}");
         }
 
         protected internal void Close()
         {
             if (_useRTLS == false) return;
-            Log.Debug("Quitting RTLS Service");
+            Debug.Log("Quitting RTLS Service");
             _link?.Close();
         }
 
@@ -97,7 +85,7 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
             }
             catch (Exception e)
             {
-                Log.Error("TrackableFrame.Parser error " + e.Message);
+                Debug.LogError("TrackableFrame.Parser error " + e.Message);
                 return false;
             }
 
@@ -112,7 +100,7 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
             }
             catch (Exception e)
             {
-                Log.Error($"JSON.Parse error of frame.Context {e.Message}");
+                Debug.LogError($"JSON.Parse error of frame.Context {e.Message}");
                 return false;
             }
 
@@ -171,7 +159,7 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
                     {
                         var message = "Camera System may require calibration.";
                         message += " Misaligned cameras may include: " + string.Join(", ", misalignedCameras);
-                        Log.Debug(message);
+                        Debug.Log(message);
                     }
 
                     // Check if any cameras have dropped
@@ -179,13 +167,12 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
                     if (numCams != NumCameras)
                     {
                         var message = "Camera System: # cameras changed from " + NumCameras + " to " + numCams;
-                        Log.Debug(message);
+                        Debug.Log(message);
                     }
 
                     // send diagnostic information about the cameras if status has changed
                     if (numCams != NumCameras || misalignedCameras.Count > 0 || _isStartup)
                     {
-                        SendCameraStatus(frame.Trackables);
                         NumCameras = numCams;
                         _isStartup = false;
                     }
@@ -206,43 +193,13 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
             }
             catch (Exception e)
             {
-                Log.Error($"JSON.Parse error of frame.Trackables[i].Context {e.Message}");
+                Debug.LogError($"JSON.Parse error of frame.Trackables[i].Context {e.Message}");
                 isAligned = false;
             }
 
             if (trackableNode["m"] == 1) isAligned = false;
 
             return isAligned;
-        }
-
-        private void SendCameraStatus(RepeatedField<Trackable> trackables)
-        {
-            var gameBayIDIsNumber = int.TryParse(ConfigManager.Instance.generalSettings.DreamCube, out var gameBayID);
-            var camDataList = new List<CameraData>();
-
-            foreach (var cam in trackables)
-            {
-                var camData = new CameraData
-                {
-                    CameraAlignmentStatus = CheckCameraStatus(cam),
-                    CameraID = cam.Id.ToString(),
-                    CameraSerialNumber = cam.Cuid.ToStringUtf8()
-                };
-                camDataList.Add(camData);
-            }
-
-            var trackingData = new TrackingSystemData
-            {
-                GameBayID = gameBayID,
-                Cameras = camDataList
-            };
-
-            Log.Information($"Sending camera data for {trackingData} cameras");
-
-            if (signalRClient != null)
-                Task.Run(() => { signalRClient.UpdateCameraStatus(trackingData, _isStartup); });
-            else
-                Log.Error("No signalR client found");
         }
     }
 }

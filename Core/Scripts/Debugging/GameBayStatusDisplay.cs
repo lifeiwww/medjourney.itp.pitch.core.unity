@@ -1,5 +1,4 @@
-﻿using Assets.dreamcube.itp.pitch.core.unity.Core.Scripts.Logging;
-using dreamcube.unity.Core.Scripts.Components.RTLS;
+﻿using dreamcube.unity.Core.Scripts.Components.RTLS;
 using dreamcube.unity.Core.Scripts.Configuration.GeneralConfig;
 using dreamcube.unity.Core.Scripts.Debugging;
 using TMPro;
@@ -58,7 +57,6 @@ namespace Assets.dreamcube.itp.pitch.core.unity.Core.Scripts.Debugging
         private string GenerateStatusString()
         {
             var tempStatus = "GameBay Status: \n\n";
-            tempStatus += $"Version: {VersionLog.ProductVersion}\n";
             tempStatus += $"FPS: {_FPSString}\n";
             tempStatus += $"RTLS LocalIP: {ConfigManager.Instance.generalSettings.RTLSLocalIP}\n";
             tempStatus += $"RTLS RemoteIP: {ConfigManager.Instance.generalSettings.RTLSRemoteIP}\n";

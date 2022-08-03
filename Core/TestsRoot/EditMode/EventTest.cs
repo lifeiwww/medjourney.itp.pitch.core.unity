@@ -26,7 +26,7 @@ namespace dreamcube.unity.Core.TestsRoot.EditMode
             Assert.IsTrue(_eventReceived);
         }
 
-        private void EventHandler(string theEvent, string msg, GameObject sender, DataModelBase data)
+        private void EventHandler(string theEvent, string msg, GameObject sender)
         {
             if (theEvent == EventStrings.EventOnSignalRMessage)
                 _eventReceived = true;

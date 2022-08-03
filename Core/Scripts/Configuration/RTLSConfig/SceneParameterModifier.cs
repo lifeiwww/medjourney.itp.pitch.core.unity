@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using dreamcube.unity.Core.Scripts.Components.RTLS;
-using Serilog;
 using UnityEngine;
 using dreamcube.unity.Core.Scripts.Util;
 public class SceneSettings
@@ -61,8 +61,8 @@ public class SceneParameterModifier : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        Log.Information("Stored logs from ParameterModifier:");
-        foreach (var x in logs) Log.Information($"-{x}");
+        Debug.Log("Stored logs from ParameterModifier:");
+        foreach (var x in logs) Debug.Log($"-{x}");
         _rtlsReceiver = GameObject.FindObjectOfType<RTLSReceiver>();
         ApplySettings();
     }

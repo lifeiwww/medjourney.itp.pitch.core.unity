@@ -6,14 +6,14 @@ namespace dreamcube.unity.Core.Scripts.Signals.Events
     public interface IEventManager
     {
         public void StartListening(string appEventType,
-            UnityAction<string, string, GameObject, DataModelBase> listener, DataModelBase data = null,
+            UnityAction<string, string, GameObject> listener,
             MonoBehaviour mb = null);
 
         public void StopListening(string appEventType,
-            UnityAction<string, string, GameObject, DataModelBase> listener);
+            UnityAction<string, string, GameObject> listener);
 
         public void TriggerEvent(string appEventType, string msg = "", GameObject obj = null,
-            DataModelBase eventData = null, bool trackEvent = false, long value = 0, bool debug = false);
+              bool trackEvent = false, long value = 0, bool debug = false);
     }
 }
 

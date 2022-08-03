@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Threading.Tasks;
-using Serilog;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,11 +20,11 @@ namespace dreamcube.unity.Core.Scripts.AssetLoading
                     yield return null;
                 }
 
-                Log.Information($"Finished loading scene {sceneName}");
+                Debug.Log($"Finished loading scene {sceneName}");
             }
             else
             {
-                Log.Warning($"{sceneName} already loaded");
+                Debug.LogWarning($"{sceneName} already loaded");
             }
         }
 
@@ -42,11 +41,11 @@ namespace dreamcube.unity.Core.Scripts.AssetLoading
                     yield return null;
                 }
 
-                Log.Information($"finished unloading scene {sceneName}");
+                Debug.Log($"finished unloading scene {sceneName}");
             }
             else
             {
-                Log.Warning($"{sceneName} not currently already loaded");
+                Debug.LogWarning($"{sceneName} not currently already loaded");
             }
         }
 
@@ -63,7 +62,7 @@ namespace dreamcube.unity.Core.Scripts.AssetLoading
             {
                 var UnloadScene = UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
                 while (UnloadScene.isDone == false) await Task.Delay(30);
-                Log.Information($"finished unloading scene {sceneName}");
+                Debug.Log($"finished unloading scene {sceneName}");
             }
         }
 
@@ -73,7 +72,7 @@ namespace dreamcube.unity.Core.Scripts.AssetLoading
             {
                 var loadScene = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                 while (loadScene.isDone == false) await Task.Delay(30);
-                Log.Information($"finished loading scene {sceneName}");
+                Debug.Log($"finished loading scene {sceneName}");
             }
         }
 

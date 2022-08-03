@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using dreamcube.unity.Core.Scripts.General;
 using dreamcube.unity.Core.Scripts.Util;
-using Serilog;
 using UnityEngine;
 using UniRx;
 
@@ -96,8 +95,8 @@ namespace dreamcube.unity.Core.Scripts.Configuration.GeneralConfig
         // since the order of the script execution is specified, this will come after LogConfig
         private void Start()
         {
-            Log.Information("Stored logs from Config Manager:");
-            foreach (var x in logs) Log.Information($"-{x}");
+            Debug.Log("Stored logs from Config Manager:");
+            foreach (var x in logs) Debug.Log($"-{x}");
         }
 
         private bool LoadGeneralSettings(string dataString)

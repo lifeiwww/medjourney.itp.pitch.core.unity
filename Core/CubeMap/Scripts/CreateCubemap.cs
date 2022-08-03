@@ -1,5 +1,4 @@
 ﻿using OdinSerializer.Utilities;
-using Serilog;
 using UnityEngine;
 
 //attach this script to your camera object
@@ -23,20 +22,11 @@ public class CreateCubemap : MonoBehaviour
         cam = GetComponent<Camera>();
     }
 
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    Log.Debug($"Saving texture");
-        //    SaveTexture();
-        //}
-    }
-
     private void LateUpdate()
     {
         if (cam.SafeIsUnityNull())
         {
-            Log.Debug( $"Could not find cubemap camera");
+            Debug.Log( $"Could not find cubemap camera");
             return;
         }
 
@@ -44,12 +34,6 @@ public class CreateCubemap : MonoBehaviour
         cam.RenderToCubemap(Cubemap, faceMask, Camera.MonoOrStereoscopicEye.Mono);
     }
 
-    // Use this for initialization
-    public void SaveTexture()
-    {
-        byte[] bytes = toTexture2D(Cubemap).EncodeToPNG();
-        System.IO.File.WriteAllBytes("C:/temp/SavedScreen.png", bytes);
-    }
     Texture2D toTexture2D(RenderTexture rTex)
     {
         Texture2D tex = new Texture2D(1920, 1080, TextureFormat.RGB24, false);
