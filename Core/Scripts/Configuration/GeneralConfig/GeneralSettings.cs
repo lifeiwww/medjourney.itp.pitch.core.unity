@@ -28,37 +28,7 @@ namespace dreamcube.unity.Core.Scripts.Configuration.GeneralConfig
         public string HeartbeatIP = Common.HEARTBEAT_IP;
         public int HeartbeatPort = Common.HEARTBEAT_PORT;
         public bool UseHeartbeat = Common.USE_HEARTBEAT;
-        public string SignalRUri = Common.SIGNALR_URI;
-
-        // CMS 
-        public string CMSDownloadFolder = Common.CMS_DOWNLOAD_FOLDER;
-        public string CMSDataFolder = Common.CMS_DATA_FOLDER;
-
-        // API settings
-        public bool UseAPI = Common.USE_API;
-        public bool ContinuousPolling = Common.CONTINUOUS_POLLING;
-
-        public string StateApiBaseUrl = Common.STATE_API_BASE_URL;
-        public string ContentServiceBaseUrl = Common.CONTENT_SERVICE_BASE_URL;
-        public string ScoringServiceBaseUrl = Common.SCORING_API_BASE_URL;
-
-        public string ApiGcmStateName = Common.API_GCM_STATE_NAME;
-        public string ApiGrdStateName = Common.API_GRD_STATE_NAME;
-        public string ApiScoringSuffix = Common.SCORES_API_SUFFIX;
-
-        public string ApiContentCategoriesName = Common.API_CONTENT_CATEGORIES_NAME;
-        public string ApiContentActivitiesName = Common.API_CONTENT_ACTIVITIES_NAME;
-        public string ApiContentScreensName = Common.API_CONTENT_SCREENS_NAME;
-
         public float Volume = Common.OUTPUT_VOLUME;
-
-
-
-        //public string DreamcubeStateDataUrl = Common.STATE_API_BASE_URL + Common.API_GCM_STATE_NAME;
-        //public string GameRoundDataUrl = Common.STATE_API_BASE_URL + Common.API_GRD_STATE_NAME;
-        //public string ContentServiceCategoriesUrl = Common.CONTENT_SERVICE_BASE_URL + Common.API_CONTENT_CATEGORIES_NAME;
-        //public string ContentServiceActivitiesUrl = Common.CONTENT_SERVICE_BASE_URL + Common.API_CONTENT_ACTIVITIES_NAME;
-        //public string ContentServiceScreensUrl = Common.CONTENT_SERVICE_BASE_URL + Common.API_CONTENT_SCREENS_NAME;
 
         public override string ToString()
         {

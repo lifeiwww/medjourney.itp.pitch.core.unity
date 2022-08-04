@@ -55,7 +55,6 @@ namespace dreamcube.unity.Core.Scripts.Configuration.GeneralConfig
 
             configDidLoad = LoadGeneralSettings(Extensions.LoadStringFromFile(pathToUse));
             logs.Add($"Load config file {Path.Combine(Application.streamingAssetsPath, pathToUse)}");
-            if (configDidLoad) SetDerivedSettings();
 
             // Save the configuration file if fields are missing or reading frpm file failed
             SaveConfigurationFile(Common.CONFIG_FILE);
@@ -68,28 +67,6 @@ namespace dreamcube.unity.Core.Scripts.Configuration.GeneralConfig
             var savePath = Path.Combine(Application.streamingAssetsPath, pathToUse);
             logs.Add($"Saving local configuration file to {savePath}");
             File.WriteAllText(savePath, settingsJsonString);
-        }
-
-        private void SetDerivedSettings()
-        {
-            DerivedSettings.DreamcubeStateDataUrl =
-                generalSettings.StateApiBaseUrl + generalSettings.ApiGcmStateName;
-
-            DerivedSettings.GameRoundDataUrl =
-                generalSettings.StateApiBaseUrl + generalSettings.ApiGrdStateName;
-
-            DerivedSettings.ContentServiceCategoriesUrl =
-                generalSettings.ContentServiceBaseUrl + generalSettings.ApiContentCategoriesName;
-
-            DerivedSettings.ContentServiceActivitiesUrl =
-                generalSettings.ContentServiceBaseUrl + generalSettings.ApiContentActivitiesName;
-
-            DerivedSettings.ContentServiceScreensUrl =
-                generalSettings.ContentServiceBaseUrl + generalSettings.ApiContentScreensName;
-
-            DerivedSettings.ContentServiceScoringUrl = 
-                generalSettings.ScoringServiceBaseUrl + generalSettings.ApiScoringSuffix;
-
         }
 
         // since the order of the script execution is specified, this will come after LogConfig
