@@ -7,28 +7,17 @@ namespace dreamcube.unity.Core.Scripts.Debugging
 {
     public class ToggleMaintenanceMode : MonoBehaviour
     {
-        // perhaps use reactive props here? 
-        // public ReactiveProperty<bool> isMaintenanceModeTestReactiveProperty = new ReactiveProperty<bool>(false);
-
         [SerializeField] private GameObject floorPattern;
         [SerializeField] private CanvasGroup WallPattern;
 
-        private bool _currentMode = true;
-
-        private void Awake()
-        {
-            ToggleMaintenanceDisplay();
-        }
-
-        private void OnDestroy()
-        {
-            if (EventManager.Instance.SafeIsUnityNull()) return;
-        }
+        private bool _currentMode = false;
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.M))
+            {
                 ToggleMaintenanceDisplay();
+            }
         }
 
         public void ToggleMaintenanceDisplay()
