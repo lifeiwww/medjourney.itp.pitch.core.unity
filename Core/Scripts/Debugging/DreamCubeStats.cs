@@ -5,18 +5,16 @@ using dreamcube.unity.Core.Scripts.Debugging;
 using TMPro;
 using UnityEngine;
 
-public class GameBayStatusDisplay : MonoBehaviour
+public class DreamCubeStats : MonoBehaviour
 {
     private float _deltaTime;
     private string _FPSString = "";
-    private string Status = "";
+    private string _previousStats = "";
 
     [SerializeField] private TextMeshProUGUI StatusTextMesh;
 
     private void OnEnable()
     {
-        //var ballProjection = FindObjectOfType<BallHit>();
-        //if( ballProjection ) ballProjection.ActivateBallProjection(true);
         var ballMarkers = FindObjectsOfType<BallToWallProjectionMarker>(true);
         foreach (var marker in ballMarkers)
             marker.gameObject.SetActive(true);
@@ -24,12 +22,9 @@ public class GameBayStatusDisplay : MonoBehaviour
 
     private void OnDisable()
     {
-        //var ballProjection = FindObjectOfType<BallHit>();
-        //if (ballProjection) ballProjection.ActivateBallProjection(false);
         var ballMarkers = FindObjectsOfType<BallToWallProjectionMarker>();
         foreach (var marker in ballMarkers)
             marker.gameObject.SetActive(false);
-
     }
 
     private void Update()
@@ -37,11 +32,11 @@ public class GameBayStatusDisplay : MonoBehaviour
         GetFrameRate();
         var stats = GenerateStatusString();
 
-        // calculate framerate
-        if (stats != Status)
+        // calculate frame rate
+        if (stats != _previousStats)
         {
             StatusTextMesh.text = stats;
-            Status = stats;
+            _previousStats = stats;
         }
     }
 
@@ -61,6 +56,8 @@ public class GameBayStatusDisplay : MonoBehaviour
         tempStatus += $"RTLS RemoteIP: {ConfigManager.Instance.generalSettings.RTLSRemoteIP}\n";
         tempStatus += $"RTLS FPS: {RTLSReceiver.RTLSfps} \n";
         tempStatus += $"RTLS cameras: {RTLSReceiver.NumCameras}\n";
+        tempStatus += $"Trackables detected: {RTLSReceiver.NumTrackables}\n";
+
         return tempStatus;
     }
 }

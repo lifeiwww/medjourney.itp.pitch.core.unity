@@ -102,12 +102,6 @@ namespace dreamcube.unity.Core.Scripts.Signals.Events
         private bool FilterEvents(string appEventType, string msg, float timeWindow)
         {
             var processed = Instance._processedEvents;
-
-            // events NOT filtered
-            if (appEventType == EventStrings.EventOnBadScore ||
-                appEventType == EventStrings.EventOnGoodScore
-            ) return false;
-
             var key = new Tuple<string, string>(appEventType, msg);
 
             if (processed.ContainsKey(key))
