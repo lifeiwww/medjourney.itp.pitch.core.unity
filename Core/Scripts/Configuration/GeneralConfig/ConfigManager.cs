@@ -31,7 +31,7 @@ namespace dreamcube.unity.Core.Scripts.Configuration.GeneralConfig
         public GeneralSettings generalSettings = new GeneralSettings();
 
         // we want to load these settings before log loading, so going to store some info during load
-        public List<string> logs = new List<string>();
+        private List<string> logs = new List<string>();
 
         public bool configDidLoad;
 
@@ -82,9 +82,6 @@ namespace dreamcube.unity.Core.Scripts.Configuration.GeneralConfig
             {
                 // Override the default settings
                 JsonUtility.FromJsonOverwrite(dataString, generalSettings);
-
-                // Override with environment variables 
-                generalSettings = new EnvironmentVariables().GetEnvironmentVariables(generalSettings);
                 return true;
             }
             catch (Exception ex)
