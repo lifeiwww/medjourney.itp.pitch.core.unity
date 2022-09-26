@@ -61,7 +61,7 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
 
         private void Update()
         {
-            if (indicator) indicator.transform.localPosition = _position;
+            if (indicator != null) indicator.transform.localPosition = _position;
 
             if (_newData)
             {
