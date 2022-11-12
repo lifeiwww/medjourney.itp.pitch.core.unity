@@ -40,10 +40,10 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
         [SerializeField] private int system = 2; // enum from rtls-protocol; 2 = motive
         [SerializeField] private bool throwawayUnorderedFrames;
         [SerializeField] private int yRotations = 3;
-        [SerializeField] private GameObject _trackablePrefab = null;
+        [SerializeField] private List<GameObject> _trackablePrefabs = new List<GameObject>();
 
         private Dictionary<string, GameObject> _trackbleObjectDictionary = new Dictionary<string, GameObject>();
-
+        private int _currentPrefab;
         private void Start()
         {
             Debug.Log("Set RTLS settings using config manager");
@@ -152,11 +152,6 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
             {
                 case 0: // markers (ball)
 
-                    // Pass the position of the first trackable
-                    // TODO: This choice shouldn't be arbitrary
-                    var trackable = frame.Trackables[0];
-                    _position = CalculateTrackablePosition(trackable);
-
                     // create copy of trackables
                     var trackableList = new List<Trackable>(frame.Trackables);
 
@@ -211,7 +206,6 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
             NumTrackables = frameTrackables.Count;
             List<string> trackableIds = new List<string>();
 
-
             for (var i = 0; i < frameTrackables.Count; i++)
             {
                 trackableIds.Add(frameTrackables[i].Cuid.ToStringUtf8());
@@ -233,10 +227,17 @@ namespace dreamcube.unity.Core.Scripts.Components.RTLS
                 }
                 else
                 {
-                    GameObject trkbl = Instantiate(_trackablePrefab, pos, Quaternion.identity.normalized, gameObject.transform);
+
+                    if (!_trackablePrefabs.Any()) return;
+
+                    // get a prefab from the list and increment
+                    var trackablePrefab = _trackablePrefabs[_currentPrefab];
+                    _currentPrefab = (_currentPrefab + 1) % _trackablePrefabs.Count;
+
+                    GameObject trkbl = Instantiate(trackablePrefab, pos, Quaternion.identity.normalized, gameObject.transform);
                     Color col = UnityEngine.Random.ColorHSV();
                     col.a = 0.7f;
-                    trkbl.GetComponentInChildren<MeshRenderer>().material.color = col;
+                    trkbl.GetComponentInChildren<MeshRenderer>().materials.Last().color = col;
                     var trackableObject = trkbl.GetComponent<TrackableGameObject>();
                     var trackableCuid = t.Cuid.ToStringUtf8();
                     trkbl.name = $"Trackable-{trackableCuid}";

@@ -21,6 +21,9 @@ public class MouseDirectKickable : MonoBehaviour
     private void CalculateMouseStuff()
     {
         //create a ray cast and set it to the mouses cursor position in game
+        if (gameCamera == null)
+            gameCamera = GameObject.FindGameObjectWithTag("RoomCamera").GetComponent<Camera>();
+
         var ray = gameCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100))
